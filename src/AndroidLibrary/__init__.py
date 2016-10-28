@@ -10,7 +10,7 @@ from version import VERSION
 __version__ = VERSION
 
 import robot
-from robot.variables import GLOBAL_VARIABLES
+from robot.libraries.BuiltIn import BuiltIn
 from robot.api import logger
 
 import killableprocess
@@ -412,10 +412,11 @@ class AndroidLibrary(object):
     # BEGIN: STOLEN FROM SELENIUM2LIBRARY
 
     def _get_log_dir(self):
-        logfile = GLOBAL_VARIABLES['${LOG FILE}']
+        variables = BuiltIn().get_variables()
+        logfile = variables['${LOG FILE}']
         if logfile != 'NONE':
             return os.path.dirname(logfile)
-        return GLOBAL_VARIABLES['${OUTPUTDIR}']
+        return variables['${OUTPUTDIR}']
 
     def _get_screenshot_paths(self, filename):
         if not filename:
